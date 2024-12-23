@@ -4,8 +4,20 @@ stages:
   - deploy
 
 variables:
-  DOCKER_IMAGE: rajdeep015/rajrepo
+  DOCKER_IMAGE: rajdeep015/rajrepo:01
   KUBECONFIG: /tmp/kubeconfig
+
+# Build stage to create the Docker image
+build:
+  stage: build
+  image: docker:19.03.12
+  services:
+    - docker:19.03.12-dind
+  script:
+    - docker build -t $DOCKER_IMAGE .
+    - docker push $DOCKER_IMAGE
+  only:
+    - main
 
 # Test stage
 test:
@@ -31,7 +43,6 @@ deploy:
   before_script:
     - echo "$KUBECONFIG_CONTENT" | base64 -d > $KUBECONFIG
   script:
-    - kubectl apply -f db-deployment.yaml
-    - kubectl apply -f web-deployment.yaml
+    - kubectl apply -f k8s/
   only:
     - main

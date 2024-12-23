@@ -22,12 +22,6 @@ spec:
               value: "Plmoknijb015"
             - name: MYSQL_DATABASE
               value: "python"
-          volumeMounts:
-            - name: db-data
-              mountPath: /var/lib/mysql
-      volumes:
-        - name: db-data
-          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

@@ -1,43 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web
+  name: django
+  labels:
+    app: django
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: web
+      app: django
   template:
     metadata:
       labels:
-        app: web
+        app: django
     spec:
       containers:
-        - name: web
-          image: rajdeep015/rajrepo:django-app
+        - name: django
+          image: rajdeep015/rajrepo:01
           ports:
             - containerPort: 8000
           env:
             - name: DB_NAME
-              value: "python"
+              value: python
             - name: DB_USER
-              value: "root"
+              value: root
             - name: DB_PASSWORD
-              value: "Plmoknijb015"
+              value: Plmoknijb015
             - name: DB_HOST
-              value: "db"
+              value: db
             - name: DB_PORT
               value: "3306"
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: web
+  name: django
 spec:
   selector:
-    app: web
+    app: django
   ports:
     - protocol: TCP
       port: 8000
       targetPort: 8000
-  type: NodePort

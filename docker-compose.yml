@@ -1,6 +1,6 @@
 services:
   web:
-    image: rajdeep015/rajrepo:django-app
+    image: rajdeep015/rajrepo:01
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
@@ -9,7 +9,7 @@ services:
     environment:
       - DB_NAME=python
       - DB_USER=root
-      - DB_PASSWORD=Plmoknijb015
+      - DB_PASSWORD=Plmoknijb015  
       - DB_HOST=db
       - DB_PORT=3306
 
