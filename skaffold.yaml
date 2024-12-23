@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: django-mysql
+build:
+  artifacts:
+    - image: rajdeep015/rajrepo
+      context: .
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+      - web-deployment.yaml
+      - db-deployment.yaml

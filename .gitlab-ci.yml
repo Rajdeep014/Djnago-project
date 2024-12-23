@@ -1,0 +1,37 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  DOCKER_IMAGE: rajdeep015/rajrepo
+  KUBECONFIG: /tmp/kubeconfig
+
+# Test stage
+test:
+  stage: test
+  image: python:3.9
+  services:
+    - name: mysql:8
+      alias: db
+  variables:
+    MYSQL_ROOT_PASSWORD: Plmoknijb015
+    MYSQL_DATABASE: python
+  script:
+    - pip install -r requirements.txt
+    - python manage.py migrate
+    - python manage.py test
+  only:
+    - main
+
+# Deploy stage
+deploy:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  before_script:
+    - echo "$KUBECONFIG_CONTENT" | base64 -d > $KUBECONFIG
+  script:
+    - kubectl apply -f db-deployment.yaml
+    - kubectl apply -f web-deployment.yaml
+  only:
+    - main

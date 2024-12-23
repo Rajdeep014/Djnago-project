@@ -1,0 +1,25 @@
+services:
+  web:
+    image: rajdeep015/rajrepo:django-app
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=python
+      - DB_USER=root
+      - DB_PASSWORD=Plmoknijb015
+      - DB_HOST=db
+      - DB_PORT=3306
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: Plmoknijb015
+      MYSQL_DATABASE: python
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
